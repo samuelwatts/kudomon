@@ -1,3 +1,4 @@
+# Fight between individual kudomon
 def kudomon_battle(trainer_kudomon,enemy_kudomon)
     puts "#{trainer_kudomon.name} HP:#{trainer_kudomon.hp} is fighting #{enemy_kudomon.name} HP:#{enemy_kudomon.hp}"
     #Randomly decide who attacks first
@@ -32,11 +33,13 @@ def kudomon_battle(trainer_kudomon,enemy_kudomon)
     end
 end
 
+# Battle between collections of kudomon. Currently enemy is only one wild kudomon but can be used for trainer v trainer battles in future
 def battle(trainer_collection,enemy_collection)
     keep_fighting = true
     # Create copies of collections, as we remove elements
     trainer_collection = trainer_collection.collect{|k| k }
     enemy_collection = enemy_collection.collect{|k| k }
+    
     while trainer_collection.any? && enemy_collection.any? && keep_fighting
         puts "You have #{trainer_collection.length} kudomon ready to fight."
         # Select random kudomon from collections to fight each other
@@ -68,6 +71,7 @@ end
 
 # Calculate multiplier of attack
 def super_effective(type1, type2)
+    # Psychic effective against everything non-pyschic
     if type1 == :psychic && type2 != :psychic
         return SUPER_EFFECTIVE_FACTOR
     elsif SUPER_EFFECTIVE[type1] == type2

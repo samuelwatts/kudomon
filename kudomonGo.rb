@@ -9,6 +9,7 @@ class KudomonGo
         @running = true
         
         # Introduction
+        puts
         puts 'Welcome to Kudomon Go!!
         /\︿╱\
         \0__0/
@@ -17,10 +18,10 @@ class KudomonGo
         \_︹_/'
         puts "Before we start your adventure, what is your name Trainer?"
         
+        #List of trainers so we can handle mutliple users in future
         @trainers = []
-        #Create trainer at point (0,0) on map
+        #Spawn trainer at point (0,0) on map
         @trainer = Trainer.new(gets.chomp,{ x: 0, y: 0 })
-        #@trainer = Trainer.new('Sam',{ x: 0, y: 0 })
         # Add new trainer to list of active users
         @trainers << @trainer
         puts "Hello #{@trainer.name}!"
@@ -29,7 +30,7 @@ class KudomonGo
         print "Professor Freddy has given you a Kudomon to start with. "
         @trainer.capture(random_kudomon)
         
-        #Create Kudomon randomly across map
+        #Spawn Kudomon randomly across the map
         @wild_kudomon = []
         NO_OF_KUDOMON.times do
             invalid_position = true
@@ -43,12 +44,13 @@ class KudomonGo
     end
     
     def kudomon_nearby
-        #Return wild kudomon that are within NEARBY of the trainer
+        #Return wild kudomon that are within NEARBY (defined in config) of the trainer
         x = @trainer.position[:x]
         y = @trainer.position[:y]
         @wild_kudomon.select { |k| Math.sqrt((k.position[:x] - x)**2 + (k.position[:y] - y)**2) < NEARBY }
     end
     
+    #Allow trainer to move across the map grid step by step
     def move(trainer)
         puts "Which direction? N, W, S or E?"
         direction = gets.chomp
@@ -91,12 +93,14 @@ class KudomonGo
                 @trainer.capture(catchable_kudomon[0])
                 @wild_kudomon.delete(catchable_kudomon[0])
             else
+            # If kudomon is no longer in wild_kudomon then must have been beaten to it
                 puts "Oh no, the wild kudomon has been caught by another player!"
             end
         else
+        # If lose the battle, Kudomon not caught. We will leave it in position to try again for now.
             puts "#{catchable_kudomon[0].name} ran away."
         end
-        #Whatever the outcome heal trainer's kudomon
+        #Whatever the outcome heal trainer's kudomon. In future can add potions
         @trainer.heal
     end
     
@@ -107,7 +111,7 @@ class KudomonGo
     
     def run_game
         while @running
-            puts "You are at position (#{@trainer.position.values.join(", ")})."
+            puts "\nYou are at position (#{@trainer.position.values.join(", ")})."
             
             # Can the trainer catch anything?
             catchable_kudomon = kudomon_nearby
@@ -143,7 +147,7 @@ class KudomonGo
         end
     end
 end
-
+# Launch game
 KudomonGo.new.run_game
 
 

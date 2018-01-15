@@ -7,11 +7,13 @@ KUDOMON = {
     "Mu" => { type: :psychic, hp: 60, cp: 14 }
 }
 #Constants
-MAP_SIZE = 1000
+MAP_SIZE = 5
 
-NO_OF_KUDOMON = 100
+NO_OF_KUDOMON = 10
 
-NEARBY = 300
+NEARBY = 3
+
+SUPER_EFFECTIVE_FACTOR = 1.5
 
 # To record battle outcome
 RUN_AWAY = 0
@@ -27,5 +29,3 @@ SUPER_EFFECTIVE = {
     :rock => :electric,
     :electric => :water
 }
-
-SUPER_EFFECTIVE_FACTOR = 1.5

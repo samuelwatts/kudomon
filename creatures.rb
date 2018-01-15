@@ -19,6 +19,7 @@ class Kudomon < Creature
     def initialize(species, position=nil)
         raise "Unknown Kudomon species" unless KUDOMON.include?(species)
         @species = species
+        # Set default name
         name = "Wild " + species
         super(name,position)
         @type = KUDOMON[@species][:type]
@@ -46,14 +47,13 @@ class Trainer < Creature
     
     def move(delta)
         new_x = @position[:x] + delta[0]
-        new_y = position[:y] + delta[1]
-        if new_x < 0 || new_y < 0
+        new_y = @position[:y] + delta[1]
+        if new_x < 0 || new_y < 0 || new_x > MAP_SIZE || new_y > MAP_SIZE
             puts "You can't move in that direction."
         else
             @position[:x] = new_x
             @position[:y] = new_y
         end
-        puts @position
     end
     
     def heal

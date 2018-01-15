@@ -1,3 +1,5 @@
+Run kudomonGo.rb to start
+
 # Kudomon GO!
 Credit Kudos' Technical Challenge.
 
